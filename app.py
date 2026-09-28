@@ -116,7 +116,7 @@ def create_database():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("USE TIDB_DATABASE")
+    cursor.execute("USE cirs")
 
     # Students table
     cursor.execute("""
