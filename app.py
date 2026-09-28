@@ -553,7 +553,7 @@ def department_dashboard():
 def update_status(id):
 
     if "admin" not in session:
-        return redirect(url_for("admin_login_page"))
+        return redirect(url_for("department_login_page"))
 
     status = request.form["status"]
 
@@ -571,7 +571,7 @@ def update_status(id):
 
     flash("Complaint status updated successfully.")
 
-    return redirect(url_for("admin_dashboard"))
+    return redirect(url_for("department_dashboard"))
 
 # -----------------------------
 # LOGOUT
