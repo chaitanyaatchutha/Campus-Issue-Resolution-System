@@ -55,9 +55,9 @@ departments = [
 
 def get_connection():
     return mysql.connector.connect(
-        host="sql301.infinityfree.com",
-        user="if0_43027804",
-        password="campusissue123"
+        host="DB_HOST",
+        user="DB_USER",
+        password="DB_PASSWORD"
     )
 
 def send_department_email(student, complaint, department):
@@ -111,8 +111,8 @@ def create_database():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("CREATE DATABASE IF NOT EXISTS if0_43027804_cirs")
-    cursor.execute("USE if0_43027804_cirs")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS DB_NAME")
+    cursor.execute("USE DB_NAME")
 
     # Students table
     cursor.execute("""
