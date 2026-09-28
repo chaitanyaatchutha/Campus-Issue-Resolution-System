@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 import joblib
-import secrets
+import secrets;
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -27,8 +28,8 @@ except Exception as e:
 # DATABASE CONNECTION
 # -----------------------------
 
-EMAIL = "EMAIL"
-APP_PASSWORD = "APP_PASSWORD"
+EMAIL = "cirscomplaints@gmail.com"
+APP_PASSWORD = "abevctsavbwedxcu"
 
 department_emails = {
     "Electrical": "cirselectrical11@gmail.com",
@@ -55,9 +56,13 @@ departments = [
 
 def get_connection():
     return mysql.connector.connect(
-        host="DB_HOST",
-        user="DB_USER",
-        password="DB_PASSWORD"
+        host=os.getenv("TIDB_HOST"),
+        port=int(os.getenv("TIDB_PORT", "4000")),
+        user=os.getenv("TIDB_USER"),
+        password=os.getenv("TIDB_PASSWORD"),
+        database=os.getenv("TIDB_DATABASE", "cirs"),
+        ssl_verify_cert=True,
+        ssl_verify_identity=True
     )
 
 def send_department_email(student, complaint, department):
@@ -111,8 +116,7 @@ def create_database():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("CREATE DATABASE IF NOT EXISTS DB_NAME")
-    cursor.execute("USE DB_NAME")
+    cursor.execute("USE cirs")
 
     # Students table
     cursor.execute("""
@@ -224,10 +228,13 @@ create_database()
 
 def db():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="cirs"
+        host=os.getenv("TIDB_HOST"),
+        port=int(os.getenv("TIDB_PORT", "4000")),
+        user=os.getenv("TIDB_USER"),
+        password=os.getenv("TIDB_PASSWORD"),
+        database=os.getenv("TIDB_DATABASE", "cirs"),
+        ssl_verify_cert=True,
+        ssl_verify_identity=True
     )
 
 
